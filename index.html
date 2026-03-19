@@ -86,6 +86,11 @@
                         <span id="buffer-status" class="badge rounded-pill text-bg-primary fs-6 px-4 py-2">
                             Itens no Buffer: 0 / 5
                         </span>
+                        <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                            <span id="sem-empty" class="badge text-bg-info">empty: 5</span>
+                            <span id="sem-full" class="badge text-bg-dark">full: 0</span>
+                            <span id="sem-mutex" class="badge text-bg-success">mutex: 1</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,6 +140,10 @@
         let out_ptr = 0;
         let count = 0;
         let itemCounter = 0;
+
+        let semEmpty = TAM_BUFFER;
+        let semFull = 0;
+        let semMutex = 1;
         
         let isRunning = false;
         let prodTimeout, consTimeout;
@@ -165,6 +174,10 @@
             // Atualiza a Badge central
             const statusBadge = document.getElementById('buffer-status');
             statusBadge.innerText = `Itens no Buffer: ${count} / ${TAM_BUFFER}`;
+
+            document.getElementById('sem-empty').innerText = `empty: ${semEmpty}`;
+            document.getElementById('sem-full').innerText = `full: ${semFull}`;
+            document.getElementById('sem-mutex').innerText = `mutex: ${semMutex}`;
             
             // Muda a cor da badge se o buffer estiver no limite (cheio ou vazio)
             if (count === TAM_BUFFER) statusBadge.className = "badge rounded-pill text-bg-warning fs-6 px-4 py-2 text-dark";
@@ -216,17 +229,25 @@
         function produtorLoop() {
             if (!isRunning) return;
 
-            if (count === TAM_BUFFER) {
+            if (semEmpty === 0) {
                 logMsg('prod', '[Semáforo] 🛑 Buffer CHEIO. Produtor dormindo...', 'wait');
             } else {
+                semEmpty--;
+                semMutex--;
+
                 itemCounter++;
                 buffer[in_ptr] = itemCounter;
                 logMsg('prod', `[+] Produziu item ${itemCounter} (posição ${in_ptr})`, 'prod');
                 
                 in_ptr = (in_ptr + 1) % TAM_BUFFER;
                 count++;
+
+                semMutex++;
+                semFull++;
                 updateUI();
             }
+
+            if (semEmpty === 0 || semFull === 0) updateUI();
 
             const speed = document.getElementById('prod-speed').value;
             prodTimeout = setTimeout(produtorLoop, getDelay(speed));
@@ -235,17 +256,25 @@
         function consumidorLoop() {
             if (!isRunning) return;
 
-            if (count === 0) {
+            if (semFull === 0) {
                 logMsg('cons', '[Semáforo] 🛑 Buffer VAZIO. Consumidor dormindo...', 'wait');
             } else {
+                semFull--;
+                semMutex--;
+
                 const item = buffer[out_ptr];
                 buffer[out_ptr] = null;
                 logMsg('cons', `[-] Consumiu item ${item} (posição ${out_ptr})`, 'cons');
                 
                 out_ptr = (out_ptr + 1) % TAM_BUFFER;
                 count--;
+
+                semMutex++;
+                semEmpty++;
                 updateUI();
             }
+
+            if (semEmpty === 0 || semFull === 0) updateUI();
 
             const speed = document.getElementById('cons-speed').value;
             consTimeout = setTimeout(consumidorLoop, getDelay(speed));
@@ -267,6 +296,8 @@
                 clearTimeout(consTimeout);
             }
         }
+
+        updateUI();
     </script>
 </body>
 </html>

@@ -30,14 +30,6 @@ Quando o buffer está:
 
 Esses eventos são exibidos em dois terminais de log (produtor e consumidor).
 
-## Funcionalidades da interface
-
-- Botão para iniciar/parar a simulação;
-- Visualização gráfica das posições do buffer;
-- Atualização em tempo real da quantidade de itens no buffer;
-- Logs separados para ações do produtor e do consumidor;
-- Destaque visual para estados críticos (cheio/vazio).
-
 ## Tecnologias utilizadas
 
 - **HTML5**
@@ -45,26 +37,19 @@ Esses eventos são exibidos em dois terminais de log (produtor e consumidor).
 - **JavaScript (Vanilla)**
 - **Bootstrap 5** (via CDN)
 
-## Como executar
+## Como usar
 
-Como o projeto é estático, não há dependências para instalar.
+Você pode acessar a aplicação diretamente pelo link:
 
-1. Clone o repositório:
+- https://simulador-produtor-consumidor.vercel.app/
 
-	 ```bash
-	 git clone https://github.com/rafapeiter/simulador-produtor-consumidor.git
-	 cd simulador-produtor-consumidor
-	 ```
+Passos rápidos:
 
-2. Abra o arquivo `index.html` no navegador.
-
-Opcionalmente, você pode usar um servidor local simples:
-
-```bash
-python3 -m http.server 8000
-```
-
-Depois acesse `http://localhost:8000`.
+1. Abra o link no navegador.
+2. Defina a velocidade do **Produtor** e do **Consumidor**.
+3. Clique em **Iniciar Simulação**.
+4. Acompanhe o buffer, os ponteiros (`IN`/`OUT`) e os valores dos semáforos em tempo real.
+5. Use **Parar Simulação** para pausar a execução.
 
 ## Objetivo educacional
 
