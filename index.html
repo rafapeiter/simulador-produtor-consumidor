@@ -175,8 +175,8 @@
             const statusBadge = document.getElementById('buffer-status');
             statusBadge.innerText = `Itens no Buffer: ${count} / ${TAM_BUFFER}`;
 
-            document.getElementById('sem-empty').innerText = `empty: ${semEmpty}`;
-            document.getElementById('sem-full').innerText = `full: ${semFull}`;
+            document.getElementById('sem-empty').innerText = `vagas: ${semEmpty}`;
+            document.getElementById('sem-full').innerText = `ocupadas: ${semFull}`;
             document.getElementById('sem-mutex').innerText = `mutex: ${semMutex}`;
             
             // Muda a cor da badge se o buffer estiver no limite (cheio ou vazio)
