@@ -50,12 +50,3 @@ Passos rápidos:
 3. Clique em **Iniciar Simulação**.
 4. Acompanhe o buffer, os ponteiros (`IN`/`OUT`) e os valores dos semáforos em tempo real.
 5. Use **Parar Simulação** para pausar a execução.
-
-## Objetivo educacional
-
-Este simulador foi desenvolvido para facilitar o entendimento de:
-
-- sincronização entre processos/threads;
-- funcionamento de buffer circular;
-- cenários de bloqueio por recurso indisponível;
-- impacto de taxas diferentes de produção e consumo.
