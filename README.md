@@ -1,6 +1,7 @@
 # Simulador Produtor-Consumidor
 
 Este projeto implementa, em uma interface web interativa, o problema clássico de sincronização **Produtor-Consumidor** da disciplina de Sistemas Operacionais.
+O projeto foi criado como material de apoio para a disciplina de Programação Paralela e Distribuída, com o objetivo de facilitar o entendimento prático.
 
 ## Problema que o projeto resolve
 
